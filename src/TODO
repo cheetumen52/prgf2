@@ -1,0 +1,4 @@
+reprezentace sceny, pomoci hran i sten, dalsi atributy (barva)
+resit viditelnost, implementace DepthBuffer, ImageBuffer (puvodne rasterbufferedimage)
+Orezani objektu (trojuhelnik, hrany) zobrazovacím objemem,
+obarvení ploch / hran: Konstantní, interpolace, mapovani textur, osvetleni
