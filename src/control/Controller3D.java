@@ -1,13 +1,15 @@
 package control;
 
 import raster.ImageBuffer;
+import raster.ZbufferVisibility;
+import render.RasterizerTriangle;
+import render.Triangle;
 import transforms.Col;
+import transforms.Point3D;
 import view.Panel;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Controller3D implements Controller {
 
@@ -16,8 +18,10 @@ public class Controller3D implements Controller {
     private int width, height;
     private boolean pressed = false;
     private int ox, oy;
+    ZbufferVisibility zbf;
+    RasterizerTriangle rt;
 
-    List<Point> points;
+
     boolean modeCleared = false;
 
     public Controller3D(Panel panel) {
@@ -29,8 +33,8 @@ public class Controller3D implements Controller {
 
     public void initObjects(ImageBuffer raster) {
         raster.setClearValue(new Col(0x101010));
-        points = new ArrayList<>();
-
+        zbf = new ZbufferVisibility(raster);
+        rt = new RasterizerTriangle(zbf);
     }
 
     @Override
@@ -42,7 +46,6 @@ public class Controller3D implements Controller {
                     ox = ev.getX();
                     oy = ev.getY();
                     panel.getRaster().setElement(ox, oy, new Col(0xff0000));
-                    points.add(new Point(ox, oy));
                     redraw();
                 }
             }
@@ -101,9 +104,12 @@ public class Controller3D implements Controller {
         g.setColor(Color.white);
         g.drawLine(0, 0, width, height);
         panel.getRaster().getGraphics().drawLine(0, 0, ox, oy);
-        for (Point p : points) {
-            panel.getRaster().setElement(p.x, p.y, new Col(0xff0000));
-        }
+        zbf.drawElementWithZtest(10, 100, 0.5, new Col(0xffff00));
+        zbf.drawElementWithZtest(10, 100, 0.7, new Col(0xff0000));
+
+
+        rt.rasterize(new Triangle(new Point3D(1, 1, 0), new Point3D(-1, 0, 0), new Point3D(0, -1, 0)));
+
         g.drawString("mode (cleared every redraw): " + modeCleared, 10, 10);
         g.drawString("(c) UHK FIM PGRF", width - 150, height - 10);
         panel.repaint();

@@ -7,11 +7,34 @@ public class ZbufferVisibility {
     private DepthBuffer zBuffer;
 
     public ZbufferVisibility(int width, int height) {
-        iBuffer = new ImageBuffer(width, height);
-        zBuffer = new DepthBuffer(width, height);
+        this(new ImageBuffer(width, height));
     }
 
-    public void drawElementWithZtest(int x, int y, double z, Col color) {
-        //TODO
+    public ZbufferVisibility(ImageBuffer imageBuffer) {
+        iBuffer = imageBuffer;
+        zBuffer = new DepthBuffer(imageBuffer.getWidth(), imageBuffer.getHeight());
+    }
+
+    public ImageBuffer getiBuffer() {
+        return iBuffer;
+    }
+
+    public void setiBuffer(ImageBuffer iBuffer) {
+        this.iBuffer = iBuffer;
+    }
+
+    public DepthBuffer getzBuffer() {
+        return zBuffer;
+    }
+
+    public void setzBuffer(DepthBuffer zBuffer) {
+        this.zBuffer = zBuffer;
+    }
+
+    public void drawElementWithZtest(int x, int y, double z, Col color) { //dokončit
+        if (z < zBuffer.getElement(x, y)) {
+            zBuffer.setElement(x, y, z);
+            iBuffer.setElement(x, y, color);
+        }
     }
 }
