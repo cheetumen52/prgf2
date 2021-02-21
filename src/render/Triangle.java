@@ -1,37 +1,37 @@
 package render;
 
-import transforms.Point3D;
+import model.Vertex;
 
 public class Triangle {
-    private Point3D a, b, c; //redo to Vertex
+    private Vertex a, b, c;
 
-    public Triangle(Point3D a, Point3D b, Point3D c) {
+    public Triangle(Vertex a, Vertex b, Vertex c) {
         this.a = a;
         this.b = b;
         this.c = c;
     }
 
-    public Point3D getA() {
+    public Vertex getA() {
         return a;
     }
 
-    public void setA(Point3D a) {
+    public void setA(Vertex a) {
         this.a = a;
     }
 
-    public Point3D getB() {
+    public Vertex getB() {
         return b;
     }
 
-    public void setB(Point3D b) {
+    public void setB(Vertex b) {
         this.b = b;
     }
 
-    public Point3D getC() {
+    public Vertex getC() {
         return c;
     }
 
-    public void setC(Point3D c) {
+    public void setC(Vertex c) {
         this.c = c;
     }
 }

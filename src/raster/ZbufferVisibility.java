@@ -31,7 +31,7 @@ public class ZbufferVisibility {
         this.zBuffer = zBuffer;
     }
 
-    public void drawElementWithZtest(int x, int y, double z, Col color) { //dokončit
+    public void drawElementWithZtest(int x, int y, double z, Col color) {
         if (z < zBuffer.getElement(x, y)) {
             zBuffer.setElement(x, y, z);
             iBuffer.setElement(x, y, color);

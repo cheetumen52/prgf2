@@ -1,6 +1,6 @@
 package render;
 
-import transforms.Point3D;
+import model.Vertex;
 
 public class Renderer {
 
@@ -9,21 +9,36 @@ public class Renderer {
      * sort a,b,c by z
      * clip by z=0
      * dehomog
-     * call rasterizerTrianhle.rasterize()
+     * call rasterizerTriangle.rasterize()
      * */
     void clipTriangle(Triangle triangle) {
-        Point3D a = triangle.getA();
-        Point3D b = triangle.getB();
-        Point3D c = triangle.getC();
+        Vertex a = triangle.getA();
+        Vertex b = triangle.getB();
+        Vertex c = triangle.getC();
 
-        //sort by Z -> a.z > b.z > c.z
-
+        Vertex temp;
+        if (a.getPosition().getZ() > c.getPosition().getZ()) {
+            temp = a;
+            a = c;
+            c = temp;
+        }
+        if (a.getPosition().getZ() > b.getPosition().getZ()) {
+            temp = a;
+            a = b;
+            b = temp;
+        }
+        //staci zkontrolovat ktery je nejvetsi
+        if (b.getPosition().getZ() > c.getPosition().getZ()) {
+            temp = b;
+            b = c;
+            c = temp;
+        }
 
         //1.condition
-        if (a.getZ() <= 0) {
+        if (a.getPosition().getZ() <= 0) {
             return;
         }
-        if (b.getZ() <= 0) {
+        if (b.getPosition().getZ() <= 0) {
             //calculate intersection D and E
             //dehomog(); // A,D,E
             //rasterize(); //ADE
