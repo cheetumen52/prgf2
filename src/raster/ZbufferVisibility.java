@@ -19,22 +19,10 @@ public class ZbufferVisibility {
         return iBuffer;
     }
 
-    public void setiBuffer(ImageBuffer iBuffer) {
-        this.iBuffer = iBuffer;
-    }
-
-    public DepthBuffer getzBuffer() {
-        return zBuffer;
-    }
-
-    public void setzBuffer(DepthBuffer zBuffer) {
-        this.zBuffer = zBuffer;
-    }
-
     public void drawElementWithZtest(int x, int y, double z, Col color) {
-        if (z < zBuffer.getElement(x, y)) {
+        //if (z < zBuffer.getElement(x, y)) { //TODO - hází nullpointer
             zBuffer.setElement(x, y, z);
             iBuffer.setElement(x, y, color);
-        }
+        //}
     }
 }

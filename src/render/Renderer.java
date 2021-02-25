@@ -1,8 +1,49 @@
 package render;
 
+import model.Part;
+import model.Solid;
 import model.Vertex;
 
+import java.util.List;
+
 public class Renderer {
+    private RasterizerTriangle rasterizerTriangle;
+
+    public Renderer(RasterizerTriangle rasterizerTriangle) {
+        this.rasterizerTriangle = rasterizerTriangle;
+    }
+
+    public void render(Solid solid) {
+        //transformace - todo
+        for (Part part : solid.getPart()) {
+            switch (part.getType()) {
+                case TRIANGLES:
+                    for (int i = 0; i < part.getCount(); i++) {
+                        int indexA = part.getStart() + i * 3;
+                        int indexB = part.getStart() + i * 3 + 1;
+                        int indexC = part.getStart() + i * 3 + 2;
+                        System.out.println("Indexy: " + indexA + " " + indexB + " " + indexC);
+                        Vertex a = solid.getVertex().get(solid.getIndex().get(indexA));
+                        Vertex b = solid.getVertex().get(solid.getIndex().get(indexB));
+                        Vertex c = solid.getVertex().get(solid.getIndex().get(indexC));
+                        System.out.println("Vertexy: " + a.toString() + " " + b + " " + c);
+                        clipTriangle(new Triangle(a, b, c));
+                    }
+                    break;
+                case LINES:
+
+                    break;
+                case CIRCLES:
+                    break;
+            }
+        }
+    }
+
+    public void render(List<Solid> scene) {
+        for (Solid s : scene) {
+            render(s);
+        }
+    }
 
     /*
      * input: triangle, vertices - coords before dehomo
@@ -15,6 +56,7 @@ public class Renderer {
         Vertex a = triangle.getA();
         Vertex b = triangle.getB();
         Vertex c = triangle.getC();
+
 
         Vertex temp;
         if (a.getPosition().getZ() > c.getPosition().getZ()) {
@@ -44,5 +86,8 @@ public class Renderer {
             //rasterize(); //ADE
         }
         //condition 3-4 todo
+        rasterizerTriangle.rasterize(triangle);
+
+
     }
 }

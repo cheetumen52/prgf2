@@ -1,8 +1,12 @@
 package control;
 
+import geometryObjects.ArrowX;
+import model.Solid;
+import model.Vertex;
 import raster.ImageBuffer;
 import raster.ZbufferVisibility;
 import render.RasterizerTriangle;
+import render.Renderer;
 import render.Triangle;
 import transforms.Col;
 import transforms.Point3D;
@@ -18,8 +22,9 @@ public class Controller3D implements Controller {
     private int width, height;
     private boolean pressed = false;
     private int ox, oy;
-    ZbufferVisibility zbf;
-    RasterizerTriangle rt;
+    private ZbufferVisibility zbf;
+    private RasterizerTriangle rt;
+    private Renderer render;
 
 
     boolean modeCleared = false;
@@ -35,6 +40,7 @@ public class Controller3D implements Controller {
         raster.setClearValue(new Col(0x101010));
         zbf = new ZbufferVisibility(raster);
         rt = new RasterizerTriangle(zbf);
+        render = new Renderer(rt);
     }
 
     @Override
@@ -104,11 +110,17 @@ public class Controller3D implements Controller {
         g.setColor(Color.white);
         g.drawLine(0, 0, width, height);
         panel.getRaster().getGraphics().drawLine(0, 0, ox, oy);
+        /*
         zbf.drawElementWithZtest(10, 100, 0.5, new Col(0xffff00));
         zbf.drawElementWithZtest(10, 100, 0.7, new Col(0xff0000));
+        */
 
+        Solid a = new ArrowX();
+        render.render(a);
+        rt.rasterize(new Triangle(new Vertex(new Point3D(1, 1, 0), new Col(1., 0., 0.)),
+                new Vertex(new Point3D(-1, 0, 0), new Col(0., 1.0, 0.)),
+                new Vertex(new Point3D(0, -1, 0), new Col(0., 0., 1.))));
 
-        rt.rasterize(new Triangle(new Point3D(1, 1, 0), new Point3D(-1, 0, 0), new Point3D(0, -1, 0)));
 
         g.drawString("mode (cleared every redraw): " + modeCleared, 10, 10);
         g.drawString("(c) UHK FIM PGRF", width - 150, height - 10);
