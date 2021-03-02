@@ -110,10 +110,10 @@ public class Controller3D implements Controller {
         g.setColor(Color.white);
         g.drawLine(0, 0, width, height);
         panel.getRaster().getGraphics().drawLine(0, 0, ox, oy);
-        /*
-        zbf.drawElementWithZtest(10, 100, 0.5, new Col(0xffff00));
+
+        zbf.drawElementWithZtest(10, 100, 0.8, new Col(0xffff00));
         zbf.drawElementWithZtest(10, 100, 0.7, new Col(0xff0000));
-        */
+
 
         Solid a = new ArrowX();
         render.render(a);

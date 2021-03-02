@@ -26,18 +26,22 @@ public class DepthBuffer implements Raster<Double> {
 
     @Override
     public int getWidth() {
-        return buffer[0].length;
+        return buffer.length;
+
     }
 
     @Override
     public int getHeight() {
-        return buffer.length;
+        return buffer[0].length;
     }
 
     @Override
     public Double getElement(int x, int y) {
-        if (checkBorder(x, y)) return buffer[x][y];
-        return null;
+        if (checkBorder(x, y)) {
+            return buffer[x][y];
+        } else {
+            return null;
+        }
     }
 
     @Override

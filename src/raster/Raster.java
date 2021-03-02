@@ -15,6 +15,6 @@ public interface Raster<V> {
     void setElement(int x, int y, V value);
 
     default boolean checkBorder(int x, int y) {
-        return x < getWidth() && y < getHeight();
+        return x <= getWidth() && y <= getHeight();
     }
 }

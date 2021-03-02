@@ -22,11 +22,11 @@ public class Renderer {
                         int indexA = part.getStart() + i * 3;
                         int indexB = part.getStart() + i * 3 + 1;
                         int indexC = part.getStart() + i * 3 + 2;
-                        System.out.println("Indexy: " + indexA + " " + indexB + " " + indexC);
+
                         Vertex a = solid.getVertex().get(solid.getIndex().get(indexA));
                         Vertex b = solid.getVertex().get(solid.getIndex().get(indexB));
                         Vertex c = solid.getVertex().get(solid.getIndex().get(indexC));
-                        System.out.println("Vertexy: " + a.toString() + " " + b + " " + c);
+
                         clipTriangle(new Triangle(a, b, c));
                     }
                     break;
