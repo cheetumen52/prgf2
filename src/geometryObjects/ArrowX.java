@@ -10,6 +10,7 @@ import java.awt.*;
 
 public class ArrowX extends Solid {
     public ArrowX() {
+        super();
         getVertex().add(new Vertex(0, 0, 0, new Col(Color.white.getRGB())));
         getVertex().add(new Vertex(1, 0, 0, new Col(Color.white.getRGB())));
         getVertex().add(new Vertex(0.95, 0.1, 0, new Col(Color.white.getRGB())));
@@ -22,12 +23,15 @@ public class ArrowX extends Solid {
         getIndex().add(1);
         getIndex().add(2);
         getIndex().add(3);
+
         getIndex().add(1);
         getIndex().add(2);
         getIndex().add(4);
+
         getIndex().add(1);
         getIndex().add(4);
         getIndex().add(3);
+
         getIndex().add(4);
         getIndex().add(2);
         getIndex().add(3);

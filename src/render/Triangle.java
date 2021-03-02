@@ -1,10 +1,10 @@
 package render;
 
 import model.Vertex;
+import transforms.Col;
 
 public class Triangle {
     private Vertex a, b, c;
-
     public Triangle(Vertex a, Vertex b, Vertex c) {
         this.a = a;
         this.b = b;
@@ -33,5 +33,9 @@ public class Triangle {
 
     public void setC(Vertex c) {
         this.c = c;
+    }
+
+    public Col getColor() {
+        return new Col(1, 0, 1.);
     }
 }

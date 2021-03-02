@@ -4,10 +4,13 @@ import model.Vertex;
 import raster.ZbufferVisibility;
 import transforms.Vec3D;
 
+import java.awt.*;
+
 
 public class RasterizerTriangle {
     private ZbufferVisibility zbf;
     private int width, height;
+    private Shader shader;
 
     public RasterizerTriangle(ZbufferVisibility zbf) {
         this.zbf = zbf;
@@ -46,12 +49,7 @@ public class RasterizerTriangle {
             b = c;
             c = temp;
         }
-        /* // Obvod trojuhelníku
-        Graphics g = zbf.getiBuffer().getImg().getGraphics();
-        g.drawLine((int)a.getX(),(int)a.getY(),(int)b.getX(),(int)b.getY());
-        g.drawLine((int)a.getX(),(int)a.getY(),(int)c.getX(),(int)c.getY());
-        g.drawLine((int)c.getX(),(int)c.getY(),(int)b.getX(),(int)b.getY());
-        */
+
 
         Vertex vA = triangle.getA();
         Vertex vB = triangle.getB();
@@ -78,11 +76,26 @@ public class RasterizerTriangle {
                         double t = (x - ab.getX()) / (ac.getX() - ab.getX());
                         Vertex vABC = vAB.mul(1 - t).add(vAC.mul(t));
 
-                        zbf.drawElementWithZtest(x, y, 0.5, vABC.getColor());
+                        zbf.drawElementWithZtest(x, y, 0.5, shader.shade(vABC));
                     }
                 }
             }
         }
+
+        // Obvod trojuhelníku
+
+        Graphics g = zbf.getiBuffer().getImg().getGraphics();
+        g.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY());
+        g.drawLine((int) a.getX(), (int) a.getY(), (int) c.getX(), (int) c.getY());
+        g.drawLine((int) c.getX(), (int) c.getY(), (int) b.getX(), (int) b.getY());
         //todo
+    }
+
+    public Shader getShader() {
+        return shader;
+    }
+
+    public void setShader(Shader shader) {
+        this.shader = shader;
     }
 }

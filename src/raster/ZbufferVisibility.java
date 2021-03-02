@@ -20,7 +20,7 @@ public class ZbufferVisibility {
     }
 
     public void drawElementWithZtest(int x, int y, double z, Col color) {
-        if (z < zBuffer.getElement(x, y)) { //TODO - hází nullpointer
+        if (z < zBuffer.getElement(x, y)) {
             zBuffer.setElement(x, y, z);
             iBuffer.setElement(x, y, color);
         }

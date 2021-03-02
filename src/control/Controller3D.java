@@ -2,14 +2,17 @@ package control;
 
 import geometryObjects.ArrowX;
 import model.Solid;
+import model.Texture;
 import model.Vertex;
 import raster.ImageBuffer;
 import raster.ZbufferVisibility;
 import render.RasterizerTriangle;
 import render.Renderer;
+import render.Shader;
 import render.Triangle;
 import transforms.Col;
 import transforms.Point3D;
+import transforms.Vec2D;
 import view.Panel;
 
 import java.awt.*;
@@ -26,7 +29,6 @@ public class Controller3D implements Controller {
     private RasterizerTriangle rt;
     private Renderer render;
 
-
     boolean modeCleared = false;
 
     public Controller3D(Panel panel) {
@@ -41,6 +43,17 @@ public class Controller3D implements Controller {
         zbf = new ZbufferVisibility(raster);
         rt = new RasterizerTriangle(zbf);
         render = new Renderer(rt);
+
+        Shader shader = v -> Texture.getTexel(v.getTexCoord().getX(), v.getTexCoord().getY());
+        //Shader shader = (Triangle t, Vertex v) -> t.getColor();
+        /*Shader shader = (Vertex a,Vertex b, Vertex c,Vertex v) ->
+        {
+            Vec3D normal = v.getNormal().normalized().get();
+            Vec3D light = new Vec3D(1,2,5).normalized().get();
+            double cosA = normal.dot(light);
+            return new Col(cosA,cosA,1.);
+        };  //diffuzní složka osvětlení*/
+        rt.setShader(shader);
     }
 
     @Override
@@ -111,15 +124,15 @@ public class Controller3D implements Controller {
         g.drawLine(0, 0, width, height);
         panel.getRaster().getGraphics().drawLine(0, 0, ox, oy);
 
-        zbf.drawElementWithZtest(10, 100, 0.8, new Col(0xffff00));
+        zbf.drawElementWithZtest(10, 100, 0.5, new Col(0xffff00));
         zbf.drawElementWithZtest(10, 100, 0.7, new Col(0xff0000));
 
 
         Solid a = new ArrowX();
         render.render(a);
-        rt.rasterize(new Triangle(new Vertex(new Point3D(1, 1, 0), new Col(1., 0., 0.)),
-                new Vertex(new Point3D(-1, 0, 0), new Col(0., 1.0, 0.)),
-                new Vertex(new Point3D(0, -1, 0), new Col(0., 0., 1.))));
+        rt.rasterize(new Triangle(new Vertex(new Point3D(1, 1, 0), new Col(1., 0., 0.), new Vec2D(0, 0)),
+                new Vertex(new Point3D(-1, 0, 0), new Col(0., 1.0, 0.), new Vec2D(0, 1)),
+                new Vertex(new Point3D(0, -1, 0), new Col(0., 0., 1.), new Vec2D(1, 0))));
 
 
         g.drawString("mode (cleared every redraw): " + modeCleared, 10, 10);

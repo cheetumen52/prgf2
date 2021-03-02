@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Renderer {
     private RasterizerTriangle rasterizerTriangle;
-
     public Renderer(RasterizerTriangle rasterizerTriangle) {
         this.rasterizerTriangle = rasterizerTriangle;
     }
@@ -53,6 +52,7 @@ public class Renderer {
      * call rasterizerTriangle.rasterize()
      * */
     void clipTriangle(Triangle triangle) {
+        /*
         Vertex a = triangle.getA();
         Vertex b = triangle.getB();
         Vertex c = triangle.getC();
@@ -86,6 +86,8 @@ public class Renderer {
             //rasterize(); //ADE
         }
         //condition 3-4 todo
+
+        */
         rasterizerTriangle.rasterize(triangle);
 
 
